@@ -432,7 +432,7 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
         meuCarro.setRenavam(Integer.parseInt(MudarRenavam));
         
         String MudarPneu = jFormattedTextFieldPneu.getText().replace("/", "").replace("R", "");
-        meuCarro.setTipoPneu(Short.parseShort((MudarPneu)));
+        meuCarro.setTipoPneu(Integer.parseInt((MudarPneu)));
         
         String MudarQuilometragem = jFormattedTextFieldQuilometragem.getText().replace(".", "").replace("Km", "");
         meuCarro.setQuilometragem(Integer.parseInt(MudarQuilometragem));

@@ -13,8 +13,8 @@ import java.sql.Date;
  */
 public class Carro {
     
-    private int id,renavam;
-    private short anoFabricacao,anoLancamento,tipoPneu;
+    private int id,renavam,tipoPneu;
+    private short anoFabricacao,anoLancamento;
     private byte quantidadePortas,quantidadeBatidas;
     private String nome,cor,fabricante,placa,chassi,descricao;
     private float quilometragem,potencia;
@@ -54,11 +54,11 @@ public class Carro {
         this.anoLancamento = anoLancamento;
     }
 
-    public short getTipoPneu() {
+    public int getTipoPneu() {
         return tipoPneu;
     }
 
-    public void setTipoPneu(short tipoPneu) {
+    public void setTipoPneu(int tipoPneu) {
         this.tipoPneu = tipoPneu;
     }
 
