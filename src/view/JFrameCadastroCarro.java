@@ -79,6 +79,7 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
         jComboBoxAnoLancamento = new javax.swing.JComboBox();
         jLabel20 = new javax.swing.JLabel();
         jSpinnerMes = new javax.swing.JSpinner();
+        jLabelCodigo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -217,7 +218,9 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(278, 278, 278)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelCodigo)
+                .addGap(333, 333, 333)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -314,6 +317,7 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCodigo)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -417,12 +421,21 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
         meuCarro.setQuantidadePortas(Byte.parseByte(jComboBoxPortas.getSelectedItem().toString()));
         meuCarro.setAnoFabricacao(Short.parseShort(jComboBoxAnoFabricacao.getSelectedItem().toString()));
         
-        meuCarro.setChassi(jFormattedTextFieldChassi.getText());
-        meuCarro.setPlaca(jFormattedTextFieldPlaca.getText());
-        meuCarro.setPotencia(Float.parseFloat(jFormattedTextFieldPotencia.getText()));
-        meuCarro.setRenavam(Integer.parseInt(jFormattedTextFieldRenavam.getText()));
-        meuCarro.setTipoPneu(Short.parseShort(jFormattedTextFieldPneu.getText().toString()));
-        meuCarro.setQuilometragem(Integer.parseInt(jFormattedTextFieldQuilometragem.getText()));
+        String MudarChassi = jFormattedTextFieldChassi.getText().replace(".", "").replace("-", "");
+        meuCarro.setChassi(String.valueOf(MudarChassi));
+        
+        meuCarro.setPlaca(jFormattedTextFieldPlaca.getText().substring(0,8));
+        
+        meuCarro.setPotencia(Float.parseFloat(jFormattedTextFieldPotencia.getText().substring(0,4)));
+        
+        String MudarRenavam = jFormattedTextFieldRenavam.getText().replace(".", "").replace("-", "");
+        meuCarro.setRenavam(Integer.parseInt(MudarRenavam));
+        
+        String MudarPneu = jFormattedTextFieldPneu.getText().replace("/", "").replace("R", "");
+        meuCarro.setTipoPneu(Short.parseShort((MudarPneu)));
+        
+        String MudarQuilometragem = jFormattedTextFieldQuilometragem.getText().replace(".", "").replace("Km", "");
+        meuCarro.setQuilometragem(Integer.parseInt(MudarQuilometragem));
         
         meuCarro.setEstaFuncional(jRadioButtonEstaFuncionalSim.isSelected());
         meuCarro.setPermitidaCirculacao(jRadioButtoPermitidaCirculacaoSim.isSelected());
@@ -431,14 +444,26 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
         int mes = Integer.parseInt(jSpinnerMes.getValue().toString());
         int dia = Integer.parseInt(jSpinnerDia.getValue().toString());
         meuCarro.setDataCompra(new Date(ano,mes,dia));
-     
+        
         CarroDAO dao = new CarroDAO();
-        int codigo = dao.inserir(meuCarro);
-        if(codigo != Utilitarios.NAO_FOI_POSSIVEL_INSERIR){
-            JOptionPane.showMessageDialog(null,"Cadastro realizado com sucesso!");
+        
+        if(!jLabelCodigo.getText().equals("")){
+        meuCarro.setId(Integer.parseInt(jLabelCodigo.getText()));
+        int codigo = dao.alterar(meuCarro);
+        if(codigo != Utilitarios.NAO_FOI_POSSIVEL_ALTERAR){
+           JOptionPane.showMessageDialog(null,"Alteração realizado com sucesso!");
         }else{
-            JOptionPane.showMessageDialog(null,"Não foi possivel inserir");
+           JOptionPane.showMessageDialog(null,"Não foi possivel Alterar");
         }
+        }else{
+            int codigo = dao.inserir(meuCarro);
+            if(codigo != Utilitarios.NAO_FOI_POSSIVEL_INSERIR){
+               JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
+               jLabelCodigo.setText(String.valueOf(codigo));
+        }else{
+            JOptionPane.showMessageDialog(null,"Não foi possivel inserir");    
+                }
+            }
         
         
         
@@ -515,6 +540,7 @@ public class JFrameCadastroCarro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelChassi;
+    private javax.swing.JLabel jLabelCodigo;
     private javax.swing.JLabel jLabelDataCompra;
     private javax.swing.JLabel jLabelFuncionando;
     private javax.swing.JLabel jLabelPortas;
