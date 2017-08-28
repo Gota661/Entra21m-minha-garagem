@@ -8,6 +8,8 @@ package view;
 import dao.AviaoDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import model.Aviao;
 
@@ -22,6 +24,7 @@ public class JFrameListaAvioes extends javax.swing.JFrame {
      */
     public JFrameListaAvioes() {
         initComponents();
+        onClickTabela();
     }
     
 
@@ -213,6 +216,20 @@ public class JFrameListaAvioes extends javax.swing.JFrame {
                 aviao.getCategoria().getNome()
             });
         }
+    }
+    
+    private void onClickTabela(){
+        jTableAvioes.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            
+            @Override
+            public void valueChanged(ListSelectionEvent e){
+                if(jTableAvioes.getSelectedRow()> -1){
+                    jButtonEditar.setEnabled(true);
+                    jButtonExcluir.setEnabled(true);
+                    
+                }
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

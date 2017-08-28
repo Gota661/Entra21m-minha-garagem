@@ -109,6 +109,7 @@ public class AviaoDAO {
         try {
             PreparedStatement ps = Conexao.conectar().prepareStatement(sql);
             ps.setInt(1, id);
+            ps.execute();
             ResultSet rs = ps.getResultSet();
             if (rs.next()) {
                 aviao = new Aviao();
