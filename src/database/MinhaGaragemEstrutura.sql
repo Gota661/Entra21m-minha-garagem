@@ -32,3 +32,30 @@ CREATE TABLE IF NOT EXISTS Carros (
     
     descricao TEXT
 );
+
+#Excluir a tabela de categorais se existir
+DROP TABLE IF EXISTS categorias;
+
+#Criar tabela de categorias se ela não existir
+CREATE TABLE IF NOT EXISTS categorias(
+
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR (150) UNIQUE NOT NULL, #não permite vazio e é unico
+    descricao TEXT,
+    ativo BOOLEAN DEFAULT FALSE #Vai conter  o valor falso caso não for passado nada no INSERIR
+);
+
+CREATE TABLE IF NOT EXISTS avioes(
+ id INTEGER PRIMARY KEY AUTO_INCREMENT,
+ 
+ id_categoria INTEGER NOT NULL,
+ FOREIGN KEY (id_categoria)REFERENCES categorias(id),
+
+ nome VARCHAR(100)NOT NULL UNIQUE
+
+);
+
+INSERT INTO categorias (nome) VALUES
+("Baixa"),
+("Média"),
+("Alta");

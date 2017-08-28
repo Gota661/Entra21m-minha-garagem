@@ -27,6 +27,7 @@ public class JFrameListaCarros extends JFrame implements JFrameComportamentosInt
         criarTela();
         criarComponentes();
         adicionarOnClick();
+        definirLocalizacao();
         adicionarComponentes();
     }
 
